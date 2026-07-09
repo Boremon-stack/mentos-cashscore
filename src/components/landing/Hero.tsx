@@ -18,8 +18,8 @@ const reveal: Variants = {
 export default function Hero() {
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden px-6 pt-28 md:px-12">
-      <div className="glow-green absolute -left-40 top-10 h-[32rem] w-[32rem] rounded-full blur-3xl" />
-      <div className="glow-blue absolute -right-32 bottom-0 h-[28rem] w-[28rem] rounded-full blur-3xl" />
+      <div className="glow-green absolute -left-40 top-10 h-[32rem] w-[32rem] rounded-full opacity-40 blur-3xl" />
+      <div className="glow-blue absolute -right-32 bottom-0 h-[28rem] w-[28rem] rounded-full opacity-40 blur-3xl" />
       <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[55%] md:block">
         <HeroScene />
       </div>
@@ -30,9 +30,9 @@ export default function Hero() {
           initial="hidden"
           animate="show"
           variants={reveal}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-signal"
+          className="mb-6 text-xs font-medium uppercase tracking-[0.2em] text-mist"
         >
-          Team Mentos · IDBI Innovate
+          Team Mentos / IDBI Innovate
         </motion.p>
 
         <motion.h1

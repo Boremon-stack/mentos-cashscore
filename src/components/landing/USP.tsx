@@ -31,7 +31,7 @@ function FlowRow({ steps, accent }: { steps: string[]; accent: "mist" | "signal"
 export default function USP() {
   return (
     <section id="usp" className="relative bg-ink px-6 py-28 md:px-12">
-      <div className="glow-blue pointer-events-none absolute right-0 top-0 h-[26rem] w-[26rem] rounded-full blur-3xl" />
+      <div className="glow-blue pointer-events-none absolute right-0 top-0 h-[26rem] w-[26rem] rounded-full opacity-30 blur-3xl" />
       <div className="relative mx-auto max-w-5xl">
         <motion.p
           initial={{ opacity: 0, y: 16 }}
@@ -103,7 +103,7 @@ export default function USP() {
             ["Instant, not iterative", "No 7-day bureau lag — a live composite score in seconds."],
           ].map(([title, body]) => (
             <div key={title} className="rounded-2xl border border-white/8 bg-white/[0.02] p-6">
-              <h4 className="font-display text-lg font-semibold text-paper">{title}</h4>
+              <h3 className="font-display text-lg font-semibold text-paper">{title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-mist">{body}</p>
             </div>
           ))}

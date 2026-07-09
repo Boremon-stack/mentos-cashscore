@@ -12,6 +12,7 @@
   --mist: #9fb3ac;
   --signal-green: #6fbfa0;
   --signal-green-dim: #4c8f76;
+  --signal-green-deep: #234a3c;
   --electric-blue: #e28b5c;
   --electric-blue-dim: #b56b42;
   --danger: #e2645c;
@@ -26,6 +27,7 @@
   --color-mist: var(--mist);
   --color-signal: var(--signal-green);
   --color-signal-dim: var(--signal-green-dim);
+  --color-signal-deep: var(--signal-green-deep);
   --color-blue: var(--electric-blue);
   --color-blue-dim: var(--electric-blue-dim);
   --color-danger: var(--danger);

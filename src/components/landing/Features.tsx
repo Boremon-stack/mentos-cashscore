@@ -34,7 +34,7 @@ export default function Features() {
           transition={{ duration: 0.6 }}
           className="mb-16 max-w-xl"
         >
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-signal-dim">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-signal-deep">
             The idea
           </p>
           <h2 className="font-display text-4xl font-semibold leading-tight md:text-5xl">

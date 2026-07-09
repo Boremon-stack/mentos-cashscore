@@ -29,7 +29,7 @@ export default function AnalysisPanel({ persona, result }: { persona: Persona; r
         </span>
       </div>
 
-      <p className="mt-4 max-w-3xl text-sm leading-relaxed text-mist">{narrative}</p>
+      <p className="mt-4 max-w-[68ch] text-sm leading-relaxed text-mist">{narrative}</p>
 
       <div className="mt-6 grid gap-4 border-t border-white/8 pt-5 sm:grid-cols-3">
         <div>
