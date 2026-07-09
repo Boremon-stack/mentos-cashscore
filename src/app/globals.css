@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #070b09;
+  --ink-soft: #0e1512;
+  --graphite: #161d19;
+  --paper: #f5f1e6;
+  --paper-dim: #eae4d3;
+  --mist: #9fb0a5;
+  --signal-green: #2bff9e;
+  --signal-green-dim: #1ba370;
+  --electric-blue: #3d6bff;
+  --electric-blue-dim: #2748b3;
+  --danger: #ff5d5d;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-graphite: var(--graphite);
+  --color-paper: var(--paper);
+  --color-paper-dim: var(--paper-dim);
+  --color-mist: #9fb0a5;
+  --color-signal: var(--signal-green);
+  --color-signal-dim: var(--signal-green-dim);
+  --color-blue: var(--electric-blue);
+  --color-blue-dim: var(--electric-blue-dim);
+  --color-danger: var(--danger);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+::selection {
+  background: var(--signal-green);
+  color: var(--ink);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.noise-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.glow-green {
+  background: radial-gradient(circle at center, rgba(43,255,158,0.35), transparent 70%);
+}
+
+.glow-blue {
+  background: radial-gradient(circle at center, rgba(61,107,255,0.35), transparent 70%);
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+
+@keyframes ticker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.animate-ticker {
+  animation: ticker 1.4s ease-in-out infinite;
+}
