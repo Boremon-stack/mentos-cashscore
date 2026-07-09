@@ -13,7 +13,7 @@
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-animations-0055FF?logo=framer&logoColor=white)](https://www.framer.com/motion/)
 [![Deployed on Vercel](https://img.shields.io/badge/Deployed-Vercel-000000?logo=vercel&logoColor=white)](https://vercel.com)
 
-**[Live demo →](#)** &nbsp;·&nbsp; **[Pitch deck →](#)**
+**[Live demo →](https://mentos-cashscore.vercel.app)** &nbsp;·&nbsp; **[Pitch deck →](#)**
 
 </div>
 
