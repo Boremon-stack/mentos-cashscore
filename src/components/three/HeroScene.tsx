@@ -5,22 +5,46 @@ import { Float, MeshDistortMaterial, Sparkles, Text } from "@react-three/drei";
 import { useRef, Suspense } from "react";
 import type { Group, Mesh } from "three";
 
+function OrbitNode({
+  radius,
+  speed,
+  tiltX,
+  tiltZ,
+  phase,
+  size,
+  color,
+}: {
+  radius: number;
+  speed: number;
+  tiltX: number;
+  tiltZ: number;
+  phase: number;
+  size: number;
+  color: string;
+}) {
+  const spinRef = useRef<Group>(null);
+  useFrame((_, delta) => {
+    if (spinRef.current) spinRef.current.rotation.y += delta * speed;
+  });
+  return (
+    <group rotation={[tiltX, 0, tiltZ]}>
+      <group ref={spinRef} rotation={[0, phase, 0]}>
+        <mesh position={[radius, 0, 0]}>
+          <sphereGeometry args={[size, 24, 24]} />
+          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.9} roughness={0.3} metalness={0.4} />
+        </mesh>
+      </group>
+    </group>
+  );
+}
+
 function CashflowCore() {
   const coreRef = useRef<Mesh>(null);
   const glyphGroupRef = useRef<Group>(null);
-  const ringRef = useRef<Mesh>(null);
 
-  useFrame((state, delta) => {
-    if (coreRef.current) {
-      coreRef.current.rotation.y += delta * 0.15;
-    }
-    if (glyphGroupRef.current) {
-      glyphGroupRef.current.rotation.y += delta * 0.15;
-    }
-    if (ringRef.current) {
-      ringRef.current.rotation.z += delta * 0.12;
-      ringRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.3;
-    }
+  useFrame((_, delta) => {
+    if (coreRef.current) coreRef.current.rotation.y += delta * 0.15;
+    if (glyphGroupRef.current) glyphGroupRef.current.rotation.y += delta * 0.15;
   });
 
   return (
@@ -29,30 +53,23 @@ function CashflowCore() {
         <mesh ref={coreRef}>
           <sphereGeometry args={[1.6, 96, 96]} />
           <MeshDistortMaterial
-            color="#2bff9e"
-            emissive="#0f5c3a"
-            roughness={0.1}
-            metalness={0.55}
-            distort={0.12}
-            speed={1.2}
+            color="#6fbfa0"
+            emissive="#234a3c"
+            roughness={0.08}
+            metalness={0.65}
+            distort={0.08}
+            speed={1}
           />
         </mesh>
         <group ref={glyphGroupRef}>
-          <Text
-            position={[0, 0, 1.72]}
-            fontSize={1.5}
-            color="#07130d"
-            anchorX="center"
-            anchorY="middle"
-            fontWeight={700}
-          >
+          <Text position={[0, 0, 1.72]} fontSize={1.5} color="#0d1917" anchorX="center" anchorY="middle" fontWeight={700}>
             ₹
           </Text>
           <Text
             position={[0, 0, -1.72]}
             rotation={[0, Math.PI, 0]}
             fontSize={1.5}
-            color="#07130d"
+            color="#0d1917"
             anchorX="center"
             anchorY="middle"
             fontWeight={700}
@@ -60,16 +77,12 @@ function CashflowCore() {
             ₹
           </Text>
         </group>
+
+        <OrbitNode radius={2.5} speed={0.5} tiltX={0.3} tiltZ={0.1} phase={0} size={0.16} color="#6fbfa0" />
+        <OrbitNode radius={2.9} speed={-0.35} tiltX={-0.25} tiltZ={0.6} phase={2.1} size={0.13} color="#e28b5c" />
+        <OrbitNode radius={2.2} speed={0.65} tiltX={0.8} tiltZ={-0.4} phase={4.2} size={0.11} color="#edf3f0" />
       </Float>
-      <mesh ref={ringRef} rotation={[Math.PI / 2.4, 0, 0]}>
-        <torusGeometry args={[2.6, 0.02, 16, 120]} />
-        <meshStandardMaterial color="#3d6bff" emissive="#3d6bff" emissiveIntensity={1.2} />
-      </mesh>
-      <mesh rotation={[Math.PI / 1.6, 0.4, 0]}>
-        <torusGeometry args={[3.1, 0.012, 16, 120]} />
-        <meshStandardMaterial color="#2bff9e" emissive="#2bff9e" emissiveIntensity={0.8} />
-      </mesh>
-      <Sparkles count={60} scale={6} size={2} speed={0.3} color="#2bff9e" opacity={0.6} />
+      <Sparkles count={50} scale={6} size={2} speed={0.3} color="#6fbfa0" opacity={0.5} />
     </group>
   );
 }
@@ -77,15 +90,11 @@ function CashflowCore() {
 export default function HeroScene() {
   return (
     <div className="absolute inset-0" aria-hidden="true">
-      <Canvas
-        dpr={[1, 1.6]}
-        camera={{ position: [0, 0, 7], fov: 42 }}
-        gl={{ antialias: true, alpha: true }}
-      >
+      <Canvas dpr={[1, 1.6]} camera={{ position: [0, 0, 7], fov: 42 }} gl={{ antialias: true, alpha: true }}>
         <Suspense fallback={null}>
           <ambientLight intensity={0.5} />
-          <pointLight position={[5, 5, 5]} intensity={1.4} color="#2bff9e" />
-          <pointLight position={[-5, -3, 2]} intensity={1.2} color="#3d6bff" />
+          <pointLight position={[5, 5, 5]} intensity={1.4} color="#6fbfa0" />
+          <pointLight position={[-5, -3, 2]} intensity={1.2} color="#e28b5c" />
           <CashflowCore />
         </Suspense>
       </Canvas>

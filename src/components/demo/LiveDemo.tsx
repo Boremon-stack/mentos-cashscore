@@ -8,6 +8,7 @@ import ScoreGauge from "./ScoreGauge";
 import FactorRadar from "./FactorRadar";
 import ComparisonBars from "./ComparisonBars";
 import { LiveComposePanel, LiveEmiPanel, LiveSalaryPanel, LiveUpiPanel } from "./LiveCalcPanels";
+import AnalysisPanel from "./AnalysisPanel";
 
 type Stage = "select" | "analyzing" | "results";
 
@@ -208,6 +209,8 @@ export default function LiveDemo() {
                 />
               </div>
             </div>
+
+            <AnalysisPanel persona={persona} result={result} />
           </motion.div>
         )}
       </AnimatePresence>
