@@ -24,7 +24,7 @@ export default function ComparisonBars({
       name: "CashScore",
       value: active ? cashScore : 0,
       label: active ? String(cashScore) : "",
-      fill: "#2fa87f",
+      fill: "#3968c9",
     },
   ];
 

@@ -17,8 +17,8 @@ export default function FactorRadar({ factors, active }: { factors: FactorScore[
           />
           <Radar
             dataKey="score"
-            stroke="#2fa87f"
-            fill="#2fa87f"
+            stroke="#3968c9"
+            fill="#3968c9"
             fillOpacity={0.28}
             strokeWidth={2}
             isAnimationActive

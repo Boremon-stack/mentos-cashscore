@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
-/* Midnight teal, brighter coral, red & white. `signal` = teal (primary
-   accent), `blue` = bright coral-orange (secondary accent) — names kept
-   for minimal churn, values updated for more contrast/pop + a true red. */
+/* Dark blue, coral, red & white. `signal` = dark blue (primary accent),
+   `blue` = bright coral-orange (secondary accent) — names kept for
+   minimal churn; `signal` moved off green per the latest palette pass. */
 :root {
   --ink: #0d1917;
   --ink-soft: #12211e;
@@ -10,12 +10,12 @@
   --paper: #ffffff;
   --paper-dim: #e4ece9;
   --mist: #aebfb9;
-  --signal-green: #4fd8a4;
-  --signal-green-dim: #359570;
-  --signal-green-deep: #1d4636;
+  --signal-green: #3968c9;
+  --signal-green-dim: #2a4f9c;
+  --signal-green-deep: #14264d;
   --electric-blue: #ff7a4a;
   --electric-blue-dim: #d65b2e;
-  --danger: #ff4757;
+  --danger: #e2453c;
 }
 
 @theme inline {
@@ -50,7 +50,7 @@ body {
 
 ::selection {
   background: var(--signal-green);
-  color: var(--ink);
+  color: var(--paper);
 }
 
 h1, h2, h3, h4 {
@@ -71,7 +71,7 @@ h1, h2, h3, h4 {
 }
 
 .glow-green {
-  background: radial-gradient(circle at center, rgba(79,216,164,0.16), transparent 70%);
+  background: radial-gradient(circle at center, rgba(57,104,201,0.18), transparent 70%);
 }
 
 .glow-blue {

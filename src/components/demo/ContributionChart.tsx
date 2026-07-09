@@ -26,7 +26,7 @@ export default function ContributionChart({ factors }: { factors: FactorScore[] 
           />
           <Bar dataKey="points" radius={[0, 6, 6, 0]} barSize={20} isAnimationActive animationDuration={900}>
             {data.map((_, i) => (
-              <Cell key={i} fill="#2fa87f" />
+              <Cell key={i} fill="#3968c9" />
             ))}
             <LabelList dataKey="label" position="right" fill="#ffffff" fontSize={12} fontWeight={600} />
           </Bar>
