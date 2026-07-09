@@ -53,8 +53,8 @@ function CashflowCore() {
         <mesh ref={coreRef}>
           <sphereGeometry args={[1.6, 96, 96]} />
           <MeshDistortMaterial
-            color="#3968c9"
-            emissive="#16264d"
+            color="#6fbfa0"
+            emissive="#234a3c"
             roughness={0.08}
             metalness={0.65}
             distort={0.08}
@@ -78,11 +78,11 @@ function CashflowCore() {
           </Text>
         </group>
 
-        <OrbitNode radius={2.5} speed={0.5} tiltX={0.3} tiltZ={0.1} phase={0} size={0.16} color="#3968c9" />
+        <OrbitNode radius={2.5} speed={0.5} tiltX={0.3} tiltZ={0.1} phase={0} size={0.16} color="#6fbfa0" />
         <OrbitNode radius={2.9} speed={-0.35} tiltX={-0.25} tiltZ={0.6} phase={2.1} size={0.13} color="#e28b5c" />
         <OrbitNode radius={2.2} speed={0.65} tiltX={0.8} tiltZ={-0.4} phase={4.2} size={0.11} color="#edf3f0" />
       </Float>
-      <Sparkles count={50} scale={6} size={2} speed={0.3} color="#3968c9" opacity={0.5} />
+      <Sparkles count={50} scale={6} size={2} speed={0.3} color="#6fbfa0" opacity={0.5} />
     </group>
   );
 }
@@ -93,7 +93,7 @@ export default function HeroScene() {
       <Canvas dpr={[1, 1.6]} camera={{ position: [0, 0, 7], fov: 42 }} gl={{ antialias: true, alpha: true }}>
         <Suspense fallback={null}>
           <ambientLight intensity={0.5} />
-          <pointLight position={[5, 5, 5]} intensity={1.4} color="#3968c9" />
+          <pointLight position={[5, 5, 5]} intensity={1.4} color="#6fbfa0" />
           <pointLight position={[-5, -3, 2]} intensity={1.2} color="#e28b5c" />
           <CashflowCore />
         </Suspense>

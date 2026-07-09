@@ -16,7 +16,7 @@ function UpiGeo() {
     <group ref={ref}>
       <mesh>
         <torusKnotGeometry args={[0.9, 0.24, 160, 20, 2, 3]} />
-        <meshStandardMaterial color="#3968c9" emissive="#16264d" emissiveIntensity={0.6} roughness={0.3} metalness={0.5} />
+        <meshStandardMaterial color="#6fbfa0" emissive="#234a3c" emissiveIntensity={0.6} roughness={0.3} metalness={0.5} />
       </mesh>
     </group>
   );
@@ -40,7 +40,7 @@ function EmiGeo() {
       <group ref={inner}>
         <mesh position={[0, 0, 0.05]}>
           <torusGeometry args={[0.55, 0.09, 20, 48]} />
-          <meshStandardMaterial color="#3968c9" emissive="#16264d" emissiveIntensity={0.6} roughness={0.25} metalness={0.6} />
+          <meshStandardMaterial color="#6fbfa0" emissive="#234a3c" emissiveIntensity={0.6} roughness={0.25} metalness={0.6} />
         </mesh>
       </group>
     </group>
@@ -59,8 +59,8 @@ function SalaryGeo() {
         <mesh key={i} position={[0, i * 0.32 - 0.5, 0]}>
           <cylinderGeometry args={[0.85, 0.85, 0.16, 48]} />
           <meshStandardMaterial
-            color={i % 2 === 0 ? "#3968c9" : "#e28b5c"}
-            emissive={i % 2 === 0 ? "#16264d" : "#7a4a2e"}
+            color={i % 2 === 0 ? "#6fbfa0" : "#e28b5c"}
+            emissive={i % 2 === 0 ? "#234a3c" : "#7a4a2e"}
             emissiveIntensity={0.5}
             roughness={0.3}
             metalness={0.55}
@@ -84,7 +84,7 @@ export default function FeatureOrb({ variant }: { variant: Variant }) {
       <Canvas dpr={[1, 1.5]} camera={{ position: [0, 0, 3.4], fov: 40 }} gl={{ alpha: true }}>
         <Suspense fallback={null}>
           <ambientLight intensity={0.6} />
-          <pointLight position={[3, 3, 3]} intensity={1.3} color="#3968c9" />
+          <pointLight position={[3, 3, 3]} intensity={1.3} color="#6fbfa0" />
           <pointLight position={[-3, -2, 2]} intensity={1} color="#e28b5c" />
           <Float speed={1.6} rotationIntensity={0.5} floatIntensity={1}>
             <Geo />
