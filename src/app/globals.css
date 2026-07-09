@@ -1,21 +1,21 @@
 @import "tailwindcss";
 
-/* Midnight teal & coral palette. `signal` = muted mint (primary accent),
-   `blue` = warm coral (secondary accent) — names kept for minimal churn,
-   values remapped away from the earlier neon green/electric-blue pass. */
+/* Midnight teal, brighter coral, red & white. `signal` = teal (primary
+   accent), `blue` = bright coral-orange (secondary accent) — names kept
+   for minimal churn, values updated for more contrast/pop + a true red. */
 :root {
   --ink: #0d1917;
   --ink-soft: #12211e;
   --graphite: #1a2724;
-  --paper: #edf3f0;
-  --paper-dim: #d8e3de;
-  --mist: #9fb3ac;
-  --signal-green: #6fbfa0;
-  --signal-green-dim: #4c8f76;
-  --signal-green-deep: #234a3c;
-  --electric-blue: #e28b5c;
-  --electric-blue-dim: #b56b42;
-  --danger: #e2645c;
+  --paper: #ffffff;
+  --paper-dim: #e4ece9;
+  --mist: #aebfb9;
+  --signal-green: #4fd8a4;
+  --signal-green-dim: #359570;
+  --signal-green-deep: #1d4636;
+  --electric-blue: #ff7a4a;
+  --electric-blue-dim: #d65b2e;
+  --danger: #ff4757;
 }
 
 @theme inline {
@@ -71,11 +71,11 @@ h1, h2, h3, h4 {
 }
 
 .glow-green {
-  background: radial-gradient(circle at center, rgba(111,191,160,0.3), transparent 70%);
+  background: radial-gradient(circle at center, rgba(79,216,164,0.16), transparent 70%);
 }
 
 .glow-blue {
-  background: radial-gradient(circle at center, rgba(226,139,92,0.28), transparent 70%);
+  background: radial-gradient(circle at center, rgba(255,122,74,0.14), transparent 70%);
 }
 
 @keyframes marquee {

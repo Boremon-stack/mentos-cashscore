@@ -4,8 +4,7 @@ import LiveDemo from "@/components/demo/LiveDemo";
 export default function DemoPage() {
   return (
     <div className="relative min-h-screen px-6 py-16 md:px-12">
-      <div className="glow-green pointer-events-none absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full opacity-30 blur-3xl" />
-      <div className="glow-blue pointer-events-none absolute -right-40 bottom-0 h-[30rem] w-[30rem] rounded-full opacity-30 blur-3xl" />
+      <div className="noise-overlay" />
 
       <div className="relative mx-auto mb-12 flex max-w-4xl items-center justify-between">
         <Link href="/" className="flex items-center gap-2">

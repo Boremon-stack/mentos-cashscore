@@ -26,6 +26,8 @@ export function LiveUpiPanel({ upi, durationMs }: { upi: UpiTxn[]; durationMs: n
   const count = useReveal(upi.length, durationMs, [upi, durationMs]);
   const visible = upi.slice(0, count);
   const runningTotal = visible.reduce((s, t) => s + t.amount, 0);
+  const avgTicket = visible.length ? runningTotal / visible.length : 0;
+  const latest = visible[visible.length - 1];
   const recent = visible.slice(-28);
 
   return (
@@ -46,6 +48,10 @@ export function LiveUpiPanel({ upi, durationMs }: { upi: UpiTxn[]; durationMs: n
           />
         ))}
       </div>
+      <div className="mt-3 flex justify-between border-t border-white/8 pt-2 font-mono text-xs text-mist">
+        <span>Avg ticket ₹{avgTicket ? avgTicket.toFixed(0) : "0"}</span>
+        <span>{latest ? `Latest: day ${latest.day} · ₹${latest.amount.toLocaleString("en-IN")}` : "Latest: —"}</span>
+      </div>
     </div>
   );
 }
@@ -54,6 +60,7 @@ export function LiveEmiPanel({ emi, durationMs }: { emi: EmiRecord[]; durationMs
   const count = useReveal(emi.length, durationMs, [emi, durationMs]);
   const visible = emi.slice(0, count);
   const onTime = visible.filter((e) => e.onTime).length;
+  const pct = visible.length ? Math.round((onTime / visible.length) * 100) : 0;
 
   return (
     <div className="mt-3 rounded-2xl border border-white/8 bg-black/20 p-4">
@@ -61,24 +68,32 @@ export function LiveEmiPanel({ emi, durationMs }: { emi: EmiRecord[]; durationMs
         {emi.map((e, i) => {
           const shown = i < count;
           return (
-            <div
-              key={e.month}
-              className={`flex h-10 w-10 items-center justify-center rounded-xl border text-[11px] font-semibold transition-all duration-300 ${
-                !shown
-                  ? "border-white/8 text-transparent"
-                  : e.onTime
-                  ? "border-signal bg-signal/15 text-signal"
-                  : "border-danger bg-danger/15 text-danger"
-              }`}
-            >
-              {shown ? e.month : "•"}
+            <div key={e.month} className="flex flex-col items-center gap-1">
+              <div
+                className={`flex h-10 w-10 items-center justify-center rounded-xl border text-[11px] font-semibold transition-all duration-300 ${
+                  !shown
+                    ? "border-white/8 text-transparent"
+                    : e.onTime
+                    ? "border-signal bg-signal/15 text-signal"
+                    : "border-danger bg-danger/15 text-danger"
+                }`}
+              >
+                {shown ? e.month : "•"}
+              </div>
+              <span
+                className={`font-mono text-[10px] transition-opacity duration-300 ${
+                  shown && !e.onTime ? "text-danger opacity-100" : "opacity-0"
+                }`}
+              >
+                +{e.daysLate}d
+              </span>
             </div>
           );
         })}
       </div>
-      <p className="mt-3 font-mono text-sm text-paper">
+      <p className="mt-2 font-mono text-sm text-paper">
         <span className="text-signal">{onTime}</span>
-        <span className="text-mist">/{count || 0} cycles on-time so far</span>
+        <span className="text-mist">/{count || 0} cycles on-time · {pct}% regularity so far</span>
       </p>
     </div>
   );
@@ -88,7 +103,11 @@ export function LiveSalaryPanel({ salary, durationMs }: { salary: SalaryCredit[]
   const count = useReveal(salary.length, durationMs, [salary, durationMs]);
   const visible = salary.slice(0, count);
   const days = visible.map((s) => s.day);
+  const amounts = visible.map((s) => s.amount);
   const spread = days.length ? Math.max(...days) - Math.min(...days) : 0;
+  const avgAmount = amounts.length ? amounts.reduce((a, b) => a + b, 0) / amounts.length : 0;
+  const amountSpread = amounts.length ? Math.max(...amounts) - Math.min(...amounts) : 0;
+  const amountStability = avgAmount ? Math.max(0, 100 - (amountSpread / avgAmount) * 100) : 0;
 
   return (
     <div className="mt-3 rounded-2xl border border-white/8 bg-black/20 p-4">
@@ -103,12 +122,17 @@ export function LiveSalaryPanel({ salary, durationMs }: { salary: SalaryCredit[]
               }`}
             >
               <span className="text-mist">{s.month} credit</span>
-              <span className="text-paper">day {s.day} · ₹{s.amount.toLocaleString("en-IN")}</span>
+              <span className="text-paper">
+                day {s.day} · ₹{s.amount.toLocaleString("en-IN")}
+              </span>
             </div>
           );
         })}
       </div>
-      <p className="mt-2 font-mono text-sm text-signal">±{spread.toFixed(0)}d date spread so far</p>
+      <div className="mt-2 flex justify-between border-t border-white/8 pt-2 font-mono text-sm">
+        <span className="text-signal">±{spread.toFixed(0)}d date spread</span>
+        <span className="text-signal">{amountStability.toFixed(0)}% amount stability</span>
+      </div>
     </div>
   );
 }
@@ -122,7 +146,7 @@ export function LiveComposePanel({
   cashScore: number;
   durationMs: number;
 }) {
-  const totalStages = factors.length + 2;
+  const totalStages = factors.length * 2 + 2;
   const stage = useReveal(totalStages, durationMs, [factors, durationMs]);
 
   const weighted = factors.map((f) => ({
@@ -131,31 +155,34 @@ export function LiveComposePanel({
     contribution: f.score * WEIGHTS[f.key],
   }));
   const runningSum = weighted
-    .slice(0, Math.min(stage, factors.length))
+    .filter((_, i) => stage > i * 2 + 1)
     .reduce((s, f) => s + f.contribution, 0);
 
   return (
     <div className="mt-3 rounded-2xl border border-white/8 bg-black/20 p-4 font-mono text-sm">
-      <div className="space-y-1.5">
-        {weighted.map(
-          (f, i) =>
-            i < stage && (
-              <div key={f.key} className="flex justify-between text-mist">
-                <span>
-                  {f.label} — {f.score} × {Math.round(f.weight * 100)}%
-                </span>
-                <span className="text-paper">{f.contribution.toFixed(1)}</span>
-              </div>
-            )
-        )}
+      <div className="space-y-2">
+        {weighted.map((f, i) => {
+          const rawShown = stage > i * 2;
+          const weightedShown = stage > i * 2 + 1;
+          if (!rawShown) return null;
+          return (
+            <div key={f.key} className="flex justify-between text-mist">
+              <span>
+                {f.label} — raw {f.score}/100
+                {weightedShown && <span> × {Math.round(f.weight * 100)}%</span>}
+              </span>
+              <span className="text-paper">{weightedShown ? f.contribution.toFixed(1) : "…"}</span>
+            </div>
+          );
+        })}
       </div>
-      {stage > factors.length && (
+      {stage > factors.length * 2 && (
         <div className="mt-2 flex justify-between border-t border-white/10 pt-2 font-semibold text-paper">
           <span>Weighted composite</span>
           <span>{runningSum.toFixed(1)} / 100</span>
         </div>
       )}
-      {stage > factors.length + 1 && (
+      {stage > factors.length * 2 + 1 && (
         <div className="mt-1 flex justify-between text-base font-bold text-signal">
           <span>→ mapped to 300–900</span>
           <span>{cashScore}</span>

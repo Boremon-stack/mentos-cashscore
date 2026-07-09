@@ -13,11 +13,11 @@ import AnalysisPanel from "./AnalysisPanel";
 type Stage = "select" | "analyzing" | "results";
 
 const STEPS = [
-  { key: "connect", label: "Securely reading transaction history", ms: 900 },
-  { key: "upi", label: "Scanning UPI frequency pattern", ms: 2400 },
-  { key: "emi", label: "Verifying EMI repayment cycles", ms: 2200 },
-  { key: "salary", label: "Checking salary credit consistency", ms: 2000 },
-  { key: "compose", label: "Composing your CashScore", ms: 2600 },
+  { key: "connect", label: "Securely reading transaction history", ms: 1400 },
+  { key: "upi", label: "Scanning UPI frequency pattern", ms: 3800 },
+  { key: "emi", label: "Verifying EMI repayment cycles", ms: 3600 },
+  { key: "salary", label: "Checking salary credit consistency", ms: 3200 },
+  { key: "compose", label: "Composing your CashScore", ms: 4400 },
 ];
 
 const archetypes = listArchetypes();
@@ -66,7 +66,7 @@ export default function LiveDemo() {
             <h2 className="font-display text-3xl font-semibold text-paper md:text-4xl">
               Pick a profile to run the reverse-pull check
             </h2>
-            <p className="mt-3 text-mist">
+            <p className="mt-3 max-w-[68ch] text-mist">
               Mock cashflow data, generated live — no real bank connection needed for this prototype.
             </p>
             <div className="mt-10 grid gap-4 md:grid-cols-3">

@@ -31,7 +31,7 @@ function FlowRow({ steps, accent }: { steps: string[]; accent: "mist" | "signal"
 export default function USP() {
   return (
     <section id="usp" className="relative bg-ink px-6 py-28 md:px-12">
-      <div className="glow-blue pointer-events-none absolute right-0 top-0 h-[26rem] w-[26rem] rounded-full opacity-30 blur-3xl" />
+      <div className="noise-overlay" />
       <div className="relative mx-auto max-w-5xl">
         <motion.p
           initial={{ opacity: 0, y: 16 }}
