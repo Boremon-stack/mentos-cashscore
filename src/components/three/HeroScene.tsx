@@ -1,18 +1,21 @@
 "use client";
 
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, MeshDistortMaterial, Sparkles } from "@react-three/drei";
+import { Float, MeshDistortMaterial, Sparkles, Text } from "@react-three/drei";
 import { useRef, Suspense } from "react";
-import type { Mesh } from "three";
+import type { Group, Mesh } from "three";
 
 function CashflowCore() {
   const coreRef = useRef<Mesh>(null);
+  const glyphGroupRef = useRef<Group>(null);
   const ringRef = useRef<Mesh>(null);
 
   useFrame((state, delta) => {
     if (coreRef.current) {
-      coreRef.current.rotation.y += delta * 0.18;
-      coreRef.current.rotation.x += delta * 0.06;
+      coreRef.current.rotation.y += delta * 0.15;
+    }
+    if (glyphGroupRef.current) {
+      glyphGroupRef.current.rotation.y += delta * 0.15;
     }
     if (ringRef.current) {
       ringRef.current.rotation.z += delta * 0.12;
@@ -22,18 +25,41 @@ function CashflowCore() {
 
   return (
     <group>
-      <Float speed={1.4} rotationIntensity={0.4} floatIntensity={0.8}>
+      <Float speed={1.4} rotationIntensity={0.3} floatIntensity={0.8}>
         <mesh ref={coreRef}>
-          <icosahedronGeometry args={[1.6, 4]} />
+          <sphereGeometry args={[1.6, 96, 96]} />
           <MeshDistortMaterial
             color="#2bff9e"
             emissive="#0f5c3a"
-            roughness={0.15}
-            metalness={0.4}
-            distort={0.35}
-            speed={1.6}
+            roughness={0.1}
+            metalness={0.55}
+            distort={0.12}
+            speed={1.2}
           />
         </mesh>
+        <group ref={glyphGroupRef}>
+          <Text
+            position={[0, 0, 1.72]}
+            fontSize={1.5}
+            color="#07130d"
+            anchorX="center"
+            anchorY="middle"
+            fontWeight={700}
+          >
+            ₹
+          </Text>
+          <Text
+            position={[0, 0, -1.72]}
+            rotation={[0, Math.PI, 0]}
+            fontSize={1.5}
+            color="#07130d"
+            anchorX="center"
+            anchorY="middle"
+            fontWeight={700}
+          >
+            ₹
+          </Text>
+        </group>
       </Float>
       <mesh ref={ringRef} rotation={[Math.PI / 2.4, 0, 0]}>
         <torusGeometry args={[2.6, 0.02, 16, 120]} />

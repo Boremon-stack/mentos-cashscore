@@ -88,7 +88,7 @@ export function scoreSalaryConsistency(salary: SalaryCredit[]): FactorScore {
   };
 }
 
-const WEIGHTS = { upi: 0.28, emi: 0.4, salary: 0.32 };
+export const WEIGHTS = { upi: 0.28, emi: 0.4, salary: 0.32 } as const;
 
 export function computeCashScore(persona: Persona): ScoreResult {
   const upi = scoreUpiFrequency(persona.upi);

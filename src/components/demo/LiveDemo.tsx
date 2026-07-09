@@ -7,15 +7,16 @@ import { computeCashScore } from "@/lib/scoring";
 import ScoreGauge from "./ScoreGauge";
 import FactorRadar from "./FactorRadar";
 import ComparisonBars from "./ComparisonBars";
+import { LiveComposePanel, LiveEmiPanel, LiveSalaryPanel, LiveUpiPanel } from "./LiveCalcPanels";
 
 type Stage = "select" | "analyzing" | "results";
 
 const STEPS = [
   { key: "connect", label: "Securely reading transaction history", ms: 900 },
-  { key: "upi", label: "Scanning UPI frequency pattern", ms: 1300 },
-  { key: "emi", label: "Verifying EMI repayment cycles", ms: 1300 },
-  { key: "salary", label: "Checking salary credit consistency", ms: 1200 },
-  { key: "compose", label: "Composing your CashScore", ms: 900 },
+  { key: "upi", label: "Scanning UPI frequency pattern", ms: 2400 },
+  { key: "emi", label: "Verifying EMI repayment cycles", ms: 2200 },
+  { key: "salary", label: "Checking salary credit consistency", ms: 2000 },
+  { key: "compose", label: "Composing your CashScore", ms: 2600 },
 ];
 
 const archetypes = listArchetypes();
@@ -102,32 +103,47 @@ export default function LiveDemo() {
             className="rounded-[32px] border border-white/10 bg-white/[0.03] p-10"
           >
             <p className="text-xs uppercase tracking-[0.2em] text-signal">Live analysis · {persona.name}</p>
-            <div className="mt-8 space-y-5">
+            <div className="mt-8 space-y-3">
               {STEPS.map((step, i) => {
                 const done = i < stepIndex;
                 const current = i === stepIndex;
                 return (
-                  <div key={step.key} className="flex items-center gap-4">
-                    <div
-                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-xs ${
-                        done
-                          ? "border-signal bg-signal text-ink"
-                          : current
-                          ? "border-signal text-signal"
-                          : "border-white/15 text-mist"
-                      }`}
-                    >
-                      {done ? "✓" : i + 1}
+                  <div key={step.key}>
+                    <div className="flex items-center gap-4">
+                      <div
+                        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-xs ${
+                          done
+                            ? "border-signal bg-signal text-ink"
+                            : current
+                            ? "border-signal text-signal"
+                            : "border-white/15 text-mist"
+                        }`}
+                      >
+                        {done ? "✓" : i + 1}
+                      </div>
+                      <span
+                        className={`text-sm ${
+                          done ? "text-paper" : current ? "animate-ticker text-paper" : "text-mist"
+                        }`}
+                      >
+                        {step.label}
+                      </span>
                     </div>
-                    <span
-                      className={`text-sm ${
-                        done ? "text-paper" : current ? "animate-ticker text-paper" : "text-mist"
-                      }`}
-                    >
-                      {step.label}
-                    </span>
                     {current && (
-                      <LiveMetric stepKey={step.key} persona={persona} />
+                      <div className="ml-12">
+                        {step.key === "upi" && <LiveUpiPanel upi={persona.upi} durationMs={step.ms} />}
+                        {step.key === "emi" && <LiveEmiPanel emi={persona.emi} durationMs={step.ms} />}
+                        {step.key === "salary" && (
+                          <LiveSalaryPanel salary={persona.salary} durationMs={step.ms} />
+                        )}
+                        {step.key === "compose" && (
+                          <LiveComposePanel
+                            factors={result.factors}
+                            cashScore={result.cashScore}
+                            durationMs={step.ms}
+                          />
+                        )}
+                      </div>
                     )}
                   </div>
                 );
@@ -197,22 +213,4 @@ export default function LiveDemo() {
       </AnimatePresence>
     </div>
   );
-}
-
-function LiveMetric({ stepKey, persona }: { stepKey: string; persona: ReturnType<typeof getPersona> }) {
-  if (stepKey === "upi") {
-    return <span className="ml-auto font-mono text-sm text-signal">{persona.upi.length} txns found</span>;
-  }
-  if (stepKey === "emi") {
-    const onTime = persona.emi.filter((e) => e.onTime).length;
-    return (
-      <span className="ml-auto font-mono text-sm text-signal">
-        {onTime}/{persona.emi.length} on-time
-      </span>
-    );
-  }
-  if (stepKey === "salary") {
-    return <span className="ml-auto font-mono text-sm text-signal">{persona.salary.length} months tracked</span>;
-  }
-  return null;
 }
