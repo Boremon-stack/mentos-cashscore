@@ -13,12 +13,12 @@ export default function FactorRadar({ factors, active }: { factors: FactorScore[
           <PolarGrid stroke="rgba(255,255,255,0.12)" />
           <PolarAngleAxis
             dataKey="label"
-            tick={{ fill: "#93a8ba", fontSize: 12 }}
+            tick={{ fill: "#b494a0", fontSize: 12 }}
           />
           <Radar
             dataKey="score"
-            stroke="#d5b893"
-            fill="#d5b893"
+            stroke="#bad797"
+            fill="#bad797"
             fillOpacity={0.28}
             strokeWidth={2}
             isAnimationActive

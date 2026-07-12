@@ -18,13 +18,13 @@ export default function ComparisonBars({
       name: "CIBIL-only view",
       value: active ? (cibilAvailable ? cibilScore ?? 0 : 0) : 0,
       label: cibilAvailable ? String(cibilScore) : "No file",
-      fill: "#4c6178",
+      fill: "#7a3f56",
     },
     {
       name: "CashScore",
       value: active ? cashScore : 0,
       label: active ? String(cashScore) : "",
-      fill: "#d5b893",
+      fill: "#bad797",
     },
   ];
 
@@ -37,7 +37,7 @@ export default function ComparisonBars({
             type="category"
             dataKey="name"
             width={120}
-            tick={{ fill: "#93a8ba", fontSize: 12 }}
+            tick={{ fill: "#b494a0", fontSize: 12 }}
             axisLine={false}
             tickLine={false}
           />

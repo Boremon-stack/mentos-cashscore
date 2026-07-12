@@ -25,14 +25,13 @@ const MIN = 300;
 const MAX = 900;
 
 // Arc stroke uses a lightened tint of each swatch so it reads clearly against
-// the navy track; the badge is a solid block of the true swatch (Tan, Slate
-// Gray, Coffee, Caput Mortuum) with contrast-matched text, mirroring the
-// reference palette card's dark-block/light-text pattern.
+// the near-black cherry track; the badge is a solid block of the true swatch
+// (Matcha, mid-rose, deep olive, Cherry) with contrast-matched text.
 const BAND_STYLE: Record<string, { stroke: string; badgeBg: string; badgeText: string }> = {
-  Prime: { stroke: "#d5b893", badgeBg: "#d5b893", badgeText: "#25344f" },
-  "Near-Prime": { stroke: "#8fa5b8", badgeBg: "#617891", badgeText: "#ffffff" },
-  Building: { stroke: "#c99a68", badgeBg: "#6f4d38", badgeText: "#f3e6d3" },
-  Watch: { stroke: "#c1545b", badgeBg: "#632024", badgeText: "#ffffff" },
+  Prime: { stroke: "#bad797", badgeBg: "#bad797", badgeText: "#2b0210" },
+  "Near-Prime": { stroke: "#b494a0", badgeBg: "#96536c", badgeText: "#ffffff" },
+  Building: { stroke: "#a3c17e", badgeBg: "#5c7a4a", badgeText: "#ffffff" },
+  Watch: { stroke: "#e0546f", badgeBg: "#670626", badgeText: "#ffffff" },
 };
 
 export default function ScoreGauge({

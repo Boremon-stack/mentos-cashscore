@@ -1,24 +1,25 @@
 @import "tailwindcss";
 
-/* Palette lifted from the reference swatch card: Space Cadet (navy),
-   Slate Gray, Tan, Coffee, Caput Mortuum. `signal` = Tan (primary accent,
-   reads clean against the navy base), `blue` = Slate Gray (secondary
-   accent) — names kept for minimal churn. Dim/deep variants are tints
-   or shades of the same swatch, not new hues. */
+/* Cherry (#670626) & Matcha (#BAD797). `signal` = Matcha (primary accent,
+   high-contrast against the near-black cherry base), `blue` = a mid-tone
+   cherry rose (secondary accent, used for solid blocks + borders — kept
+   darker than `mist` so white text stays readable on top of it).
+   `danger-deep` is exact Cherry, reserved for alert/negative blocks;
+   every other value is a tint or shade of one of the two source hues. */
 :root {
-  --ink: #25344f; /* Space Cadet */
-  --ink-soft: #1c283d;
-  --graphite: #33455f;
+  --ink: #2b0210; /* near-black cherry, page background */
+  --ink-soft: #46081b;
+  --graphite: #5c0f28;
   --paper: #ffffff;
-  --paper-dim: #d5b893; /* Tan */
-  --mist: #93a8ba; /* Slate Gray, lightened for on-navy legibility */
-  --signal-green: #d5b893; /* Tan */
-  --signal-green-dim: #b8976c;
-  --signal-green-deep: #6f4d38; /* Coffee */
-  --electric-blue: #617891; /* Slate Gray */
-  --electric-blue-dim: #4c6178;
-  --danger: #c1545b; /* Caput Mortuum, lightened for on-navy legibility */
-  --danger-deep: #632024; /* Caput Mortuum */
+  --paper-dim: #dcead0; /* light Matcha tint */
+  --mist: #b494a0; /* light cherry rose, muted text */
+  --signal-green: #bad797; /* Matcha */
+  --signal-green-dim: #a3c17e;
+  --signal-green-deep: #5c7a4a; /* deep olive */
+  --electric-blue: #96536c; /* mid cherry rose */
+  --electric-blue-dim: #7a3f56;
+  --danger: #e0546f; /* Cherry, lightened for on-ink legibility */
+  --danger-deep: #670626; /* Cherry */
 }
 
 @theme inline {
@@ -75,11 +76,11 @@ h1, h2, h3, h4 {
 }
 
 .glow-green {
-  background: radial-gradient(circle at center, rgba(213,184,147,0.18), transparent 70%);
+  background: radial-gradient(circle at center, rgba(186,215,151,0.18), transparent 70%);
 }
 
 .glow-blue {
-  background: radial-gradient(circle at center, rgba(97,120,145,0.16), transparent 70%);
+  background: radial-gradient(circle at center, rgba(150,83,108,0.18), transparent 70%);
 }
 
 @keyframes marquee {
