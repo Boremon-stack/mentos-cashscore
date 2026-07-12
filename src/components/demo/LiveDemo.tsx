@@ -4,11 +4,13 @@ import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { getPersona, listArchetypes } from "@/lib/mockProfiles";
 import { computeCashScore } from "@/lib/scoring";
+import type { Persona, ScoreResult } from "@/lib/scoring";
 import ScoreGauge from "./ScoreGauge";
 import FactorRadar from "./FactorRadar";
 import ComparisonBars from "./ComparisonBars";
 import { LiveComposePanel, LiveEmiPanel, LiveSalaryPanel, LiveUpiPanel } from "./LiveCalcPanels";
 import AnalysisPanel from "./AnalysisPanel";
+import ProcessLog, { type LogLine } from "./ProcessLog";
 
 type Stage = "select" | "analyzing" | "results";
 
@@ -22,6 +24,90 @@ const STEPS = [
 
 const archetypes = listArchetypes();
 
+function buildLogLines(persona: Persona, result: ScoreResult): LogLine[] {
+  const emiOnTime = persona.emi.filter((e) => e.onTime).length;
+  const salaryDays = persona.salary.map((s) => s.day);
+  const salaryDay = salaryDays[0] ?? 0;
+  const spread = salaryDays.length ? Math.max(...salaryDays) - Math.min(...salaryDays) : 0;
+  const upiScore = result.factors.find((f) => f.key === "upi")?.score ?? 0;
+  const emiScore = result.factors.find((f) => f.key === "emi")?.score ?? 0;
+  const salaryScore = result.factors.find((f) => f.key === "salary")?.score ?? 0;
+
+  const [connect, upi, emi, salary, compose] = STEPS;
+  const offsets = {
+    connect: 0,
+    upi: connect.ms,
+    emi: connect.ms + upi.ms,
+    salary: connect.ms + upi.ms + emi.ms,
+    compose: connect.ms + upi.ms + emi.ms + salary.ms,
+  };
+
+  const groups: { start: number; span: number; lines: string[] }[] = [
+    {
+      start: offsets.connect,
+      span: connect.ms,
+      lines: [
+        "Requesting account-aggregator consent handle…",
+        "Consent granted — scope: transactions, last 90 days",
+        "Opening encrypted channel to bank aggregator",
+      ],
+    },
+    {
+      start: offsets.upi,
+      span: upi.ms,
+      lines: [
+        "Streaming UPI ledger…",
+        `${persona.upi.length} UPI transactions ingested`,
+        "Computing inter-transaction gap distribution",
+        `UPI frequency factor locked — ${upiScore}/100`,
+      ],
+    },
+    {
+      start: offsets.emi,
+      span: emi.ms,
+      lines: [
+        `Cross-referencing EMI debit signatures across ${persona.emi.length} cycles`,
+        `${emiOnTime}/${persona.emi.length} cycles cleared on time`,
+        "Scoring repayment reliability",
+        `EMI regularity factor locked — ${emiScore}/100`,
+      ],
+    },
+    {
+      start: offsets.salary,
+      span: salary.ms,
+      lines: [
+        "Isolating recurring high-value credits",
+        `Salary pattern found: day ${salaryDay} · ±${spread}d spread`,
+        "Amount stability index computed",
+        `Salary consistency factor locked — ${salaryScore}/100`,
+      ],
+    },
+    {
+      start: offsets.compose,
+      span: compose.ms,
+      lines: [
+        "Applying factor weights — UPI 28% · EMI 40% · Salary 32%",
+        "Summing weighted contributions…",
+        "Mapping composite (0–100) → CashScore (300–900)",
+      ],
+    },
+  ];
+
+  const out: LogLine[] = [];
+  groups.forEach((g) => {
+    const n = g.lines.length;
+    g.lines.forEach((text, i) => {
+      out.push({ text, atMs: Math.round(g.start + ((i + 0.6) / n) * g.span), emphasis: text.includes("locked") });
+    });
+  });
+  out.push({
+    text: `CashScore finalized: ${result.cashScore} (${result.band})`,
+    atMs: offsets.compose + compose.ms + 200,
+    emphasis: true,
+  });
+  return out;
+}
+
 export default function LiveDemo() {
   const [stage, setStage] = useState<Stage>("select");
   const [personaId, setPersonaId] = useState<string>(archetypes[0].id);
@@ -30,6 +116,7 @@ export default function LiveDemo() {
 
   const persona = useMemo(() => getPersona(personaId, seed), [personaId, seed]);
   const result = useMemo(() => computeCashScore(persona), [persona]);
+  const logLines = useMemo(() => buildLogLines(persona, result), [persona, result]);
 
   useEffect(() => {
     if (stage !== "analyzing") return;
@@ -149,6 +236,9 @@ export default function LiveDemo() {
                   </div>
                 );
               })}
+            </div>
+            <div className="mt-8 border-t border-white/8 pt-6">
+              <ProcessLog lines={logLines} active={stage === "analyzing"} resetKey={seed} />
             </div>
           </motion.div>
         )}

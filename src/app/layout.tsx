@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Manrope } from "next/font/google";
+import { Roboto_Slab, Manrope } from "next/font/google";
 import "./globals.css";
 
-const display = Bricolage_Grotesque({
+// Bold slab serif, matching the reference palette card's headline type.
+const display = Roboto_Slab({
   variable: "--font-display",
+  weight: ["600", "700", "800"],
   subsets: ["latin"],
 });
 

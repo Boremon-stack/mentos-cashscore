@@ -20,13 +20,13 @@ export default function ContributionChart({ factors }: { factors: FactorScore[] 
             type="category"
             dataKey="name"
             width={130}
-            tick={{ fill: "#aebfb9", fontSize: 12 }}
+            tick={{ fill: "#93a8ba", fontSize: 12 }}
             axisLine={false}
             tickLine={false}
           />
           <Bar dataKey="points" radius={[0, 6, 6, 0]} barSize={20} isAnimationActive animationDuration={900}>
             {data.map((_, i) => (
-              <Cell key={i} fill="#3968c9" />
+              <Cell key={i} fill="#d5b893" />
             ))}
             <LabelList dataKey="label" position="right" fill="#ffffff" fontSize={12} fontWeight={600} />
           </Bar>

@@ -41,7 +41,7 @@ export default function ScoreGauge({
   const dash = active ? circumference * pct : 0;
 
   const bandColor =
-    band === "Prime" ? "#3968c9" : band === "Near-Prime" ? "#d65b2e" : band === "Building" ? "#b8860b" : "#e2453c";
+    band === "Prime" ? "#d5b893" : band === "Near-Prime" ? "#617891" : band === "Building" ? "#b8976c" : "#c1545b";
 
   return (
     <div className="relative flex flex-col items-center">
