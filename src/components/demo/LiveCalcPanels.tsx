@@ -75,7 +75,7 @@ export function LiveEmiPanel({ emi, durationMs }: { emi: EmiRecord[]; durationMs
                     ? "border-white/8 text-transparent"
                     : e.onTime
                     ? "border-signal bg-signal/15 text-signal"
-                    : "border-danger bg-danger/15 text-danger"
+                    : "border-danger-deep bg-danger-deep text-paper"
                 }`}
               >
                 {shown ? e.month : "•"}
