@@ -10,16 +10,19 @@ const FEATURES = [
     variant: "upi" as const,
     title: "UPI Frequency",
     body: "How often, how steadily you transact — spend rhythm reveals financial engagement far better than a one-time snapshot.",
+    accentClass: "border-l-signal",
   },
   {
     variant: "emi" as const,
     title: "EMI Regularity",
     body: "On-time repayment cadence across every recurring obligation, tracked cycle over cycle instead of a single missed-payment flag.",
+    accentClass: "border-l-blue",
   },
   {
     variant: "salary" as const,
     title: "Salary Consistency",
     body: "Date and amount stability of recurring credits — the clearest proxy for income reliability a bureau file will never show.",
+    accentClass: "border-l-signal-deep",
   },
 ];
 
@@ -54,7 +57,7 @@ export default function Features() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.6, delay: i * 0.12 }}
-              className="group rounded-[28px] border border-ink/8 bg-white/70 p-8 shadow-[0_1px_0_rgba(0,0,0,0.04)] transition hover:shadow-xl"
+              className={`group rounded-[28px] border border-ink/8 border-l-4 bg-white/70 p-8 shadow-[0_1px_0_rgba(0,0,0,0.04)] transition hover:shadow-xl ${f.accentClass}`}
             >
               <div className="mb-6 h-40 w-full">
                 <FeatureOrb variant={f.variant} />

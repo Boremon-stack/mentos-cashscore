@@ -5,10 +5,12 @@ import type { Persona, ScoreResult } from "@/lib/scoring";
 import { getConfidence, getRecommendation } from "@/lib/narrative";
 import ContributionChart from "./ContributionChart";
 
+// Solid swatch blocks (Tan / Slate Gray / Caput Mortuum) with contrast-matched
+// text, instead of low-opacity tints that wash out against the navy card.
 const TONE_CLASSES: Record<string, string> = {
-  signal: "border-signal/30 bg-signal/10 text-signal",
-  blue: "border-blue/30 bg-blue/10 text-blue",
-  danger: "border-danger/30 bg-danger/10 text-danger",
+  signal: "border-signal bg-signal text-ink",
+  blue: "border-blue bg-blue text-paper",
+  danger: "border-danger-deep bg-danger-deep text-paper",
 };
 
 export default function AnalysisPanel({ persona, result }: { persona: Persona; result: ScoreResult }) {

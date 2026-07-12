@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const OLD_FLOW = ["Bank", "requests", "Bureau", "pulls", "CIBIL file", "→", "Score you never saw coming"];
 const NEW_FLOW = ["You", "tap check", "CashScore engine", "reads cashflow", "Instant score", "→", "You choose who sees it"];
 
-function FlowRow({ steps, accent }: { steps: string[]; accent: "mist" | "signal" }) {
+function FlowRow({ steps, accent }: { steps: string[]; accent: "blue" | "signal" }) {
   return (
     <div className="flex flex-wrap items-center gap-3">
       {steps.map((s, i) => (
@@ -14,10 +14,8 @@ function FlowRow({ steps, accent }: { steps: string[]; accent: "mist" | "signal"
           className={
             s === "→"
               ? "text-lg text-mist"
-              : `rounded-full border px-4 py-2 text-sm font-medium ${
-                  accent === "signal"
-                    ? "border-signal/30 bg-signal/10 text-signal"
-                    : "border-white/10 bg-white/5 text-mist"
+              : `rounded-full px-4 py-2 text-sm font-medium ${
+                  accent === "signal" ? "bg-signal text-ink" : "bg-blue text-paper"
                 }`
           }
         >
@@ -68,12 +66,12 @@ export default function USP() {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="rounded-[28px] border border-white/8 bg-white/[0.03] p-8"
+            className="rounded-[28px] border border-blue/25 bg-blue/[0.08] p-8"
           >
             <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-mist">
               Traditional bureau pull
             </p>
-            <FlowRow steps={OLD_FLOW} accent="mist" />
+            <FlowRow steps={OLD_FLOW} accent="blue" />
           </motion.div>
 
           <motion.div

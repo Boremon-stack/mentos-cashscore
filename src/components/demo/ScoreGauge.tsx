@@ -24,6 +24,17 @@ function useCountUp(target: number, duration = 1400, start = false) {
 const MIN = 300;
 const MAX = 900;
 
+// Arc stroke uses a lightened tint of each swatch so it reads clearly against
+// the navy track; the badge is a solid block of the true swatch (Tan, Slate
+// Gray, Coffee, Caput Mortuum) with contrast-matched text, mirroring the
+// reference palette card's dark-block/light-text pattern.
+const BAND_STYLE: Record<string, { stroke: string; badgeBg: string; badgeText: string }> = {
+  Prime: { stroke: "#d5b893", badgeBg: "#d5b893", badgeText: "#25344f" },
+  "Near-Prime": { stroke: "#8fa5b8", badgeBg: "#617891", badgeText: "#ffffff" },
+  Building: { stroke: "#c99a68", badgeBg: "#6f4d38", badgeText: "#f3e6d3" },
+  Watch: { stroke: "#c1545b", badgeBg: "#632024", badgeText: "#ffffff" },
+};
+
 export default function ScoreGauge({
   score,
   band,
@@ -40,8 +51,7 @@ export default function ScoreGauge({
   const circumference = Math.PI * radius;
   const dash = active ? circumference * pct : 0;
 
-  const bandColor =
-    band === "Prime" ? "#d5b893" : band === "Near-Prime" ? "#617891" : band === "Building" ? "#b8976c" : "#c1545b";
+  const style = BAND_STYLE[band] ?? BAND_STYLE.Watch;
 
   return (
     <div className="relative flex flex-col items-center">
@@ -56,14 +66,14 @@ export default function ScoreGauge({
         <motion.path
           d="M 20 150 A 120 120 0 0 1 260 150"
           fill="none"
-          stroke={bandColor}
+          stroke={style.stroke}
           strokeWidth="14"
           strokeLinecap="round"
           strokeDasharray={circumference}
           initial={{ strokeDashoffset: circumference }}
           animate={{ strokeDashoffset: circumference - dash }}
           transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
-          style={{ filter: `drop-shadow(0 0 10px ${bandColor}80)` }}
+          style={{ filter: `drop-shadow(0 0 10px ${style.stroke}80)` }}
         />
       </svg>
       <div className="absolute top-16 flex flex-col items-center">
@@ -75,7 +85,7 @@ export default function ScoreGauge({
         animate={{ opacity: active ? 1 : 0, y: active ? 0 : 8 }}
         transition={{ delay: 1.4 }}
         className="mt-2 rounded-full px-4 py-1 text-xs font-semibold"
-        style={{ color: bandColor, backgroundColor: `${bandColor}1a`, border: `1px solid ${bandColor}40` }}
+        style={{ color: style.badgeText, backgroundColor: style.badgeBg }}
       >
         {band} band
       </motion.span>
