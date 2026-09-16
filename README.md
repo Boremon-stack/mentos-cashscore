@@ -129,11 +129,4 @@ src/
     mockProfiles.ts            # seeded mock cashflow generator
 ```
 
-## Team Mentos
 
-| | |
-|---|---|
-| **Garv Bansal** | Team Lead |
-| **Simran Rawat** | Team Member |
-
-Submitted to **IDBI Innovate**.
